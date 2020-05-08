@@ -1,0 +1,17 @@
+{
+  "name": "com-zijie-passwordChecker",
+  "version": "0.0.1",
+  "description": "To check password status",
+  "cordova": {
+    "id": "com-zijie-passwordChecker",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "author": "Zijie",
+  "license": "MIT"
+}
