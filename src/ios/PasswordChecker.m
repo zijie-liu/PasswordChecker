@@ -1,24 +1,13 @@
 //
 //  PasswordChecker.m
-//  Workshop
 //
-//  Created by Peter on 5/8/20.
+//  Created by Zijie on 5/8/20.
 //
 
 #import "PasswordChecker.h"
 
 @implementation PasswordChecker
 
-static NSString * const msgNoValue = @"Please enter password";
-static NSString * const msgLengthTooShort = @"Password length too short";
-static NSString * const msgSomethingWentWrong = @"Something Went Wrong";
-static NSString * const msgWeak = @"Weak";
-static NSString * const msgMedium = @"Medium";
-static NSString * const msgStrong = @"Strong";
-static NSString * const msgVeryStrong = @"Very Strong";
-
-/// To check the password strength and return the evaluation
-/// @param command CDVInvokedUrlCommand
 -(void)checkPasswordStrength:(CDVInvokedUrlCommand *)command{
     CDVPluginResult* pluginResult = nil;
     
@@ -26,22 +15,21 @@ static NSString * const msgVeryStrong = @"Very Strong";
         NSString * passwordInput = command.arguments.firstObject;
         int strengthPoint = 0;
         
-        if ([passwordInput length] > 5) {
+        if ([passwordInput length] > kMIN_LENGTH ) {
             strengthPoint = [self evaluatePasswordStrength:passwordInput];
         }
         
         pluginResult =  [self getEvaluationResult:strengthPoint];
         
     } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:msgNoValue];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:kMSG_NO_VALUE];
     }
     
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    
+    if (self.commandDelegate != NULL) {
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }
 }
 
-/// To evaluate the password based on the complexity of it.
-/// @param passwordInput the password to be evaluated
 -(int)evaluatePasswordStrength:(NSString*)passwordInput {
     int strengthPoint = 0;
     
@@ -64,22 +52,20 @@ static NSString * const msgVeryStrong = @"Very Strong";
     return strengthPoint;
 }
 
-/// Return message based on the strength point.
-/// @param strengthPoint  the point to evaluate the strength of password
 -(CDVPluginResult*)getEvaluationResult:(int)strengthPoint {
     switch(strengthPoint) {
-        case 0:
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:msgLengthTooShort];
-        case 1:
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:msgWeak];
-        case 2:
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:msgMedium];
-        case 3:
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:msgStrong];
-        case 4:
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:msgVeryStrong];
+        case kLENGHT_TOO_SHORT :
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:kMSG_LENGHT_TOO_SHORT];
+        case kWEAK:
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:kMSG_WEAK];
+        case kMEDIUM:
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:kMSG_MEDIUM];
+        case kSTRONG:
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:kMSG_STRONG];
+        case kVERYSTRONG:
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:kMSG_VERYSTRONG];
         default :
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:msgSomethingWentWrong];
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:kMSG_SOMETHING_WENT_WRONG];
     }
 }
 
