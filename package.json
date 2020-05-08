@@ -1,17 +1,25 @@
 {
   "name": "com-zijie-passwordChecker",
   "version": "0.0.1",
-  "description": "To check password status",
+  "description": "Check password strength",
   "cordova": {
     "id": "com-zijie-passwordChecker",
     "platforms": [
       "ios"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zijie-liu/PasswordChecker.git"
+  },
   "keywords": [
     "ecosystem:cordova",
     "cordova-ios"
   ],
-  "author": "Zijie",
-  "license": "MIT"
+  "author": "Zijie Liu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zijie-liu/PasswordChecker/issues"
+  },
+  "homepage": "https://github.com/zijie-liu/PasswordChecker#readme"
 }

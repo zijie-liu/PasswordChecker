@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PasswordChecker : CDVPlugin
 
 -(void)checkPasswordStrength:(CDVInvokedUrlCommand *)command;
+-(int)evaluatePasswordStrength:(NSString*)passwordInput;
+-(CDVPluginResult*)getEvaluationResult:(int)strengthPoint;
 
 @end
 
